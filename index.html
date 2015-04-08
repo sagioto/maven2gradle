@@ -2,12 +2,30 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Maven 2 Gradle Dependencies Converter</title>
+    <title>Maven to Gradle Dependencies Converter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script src="converter.js"></script>
 </head>
 <body>
-    Enter your maven dependencies here (with or without the dependencies element):<br>
-    <textarea id="input" autofocus style="width: 400px; height: 200px"></textarea><textarea id="output" disabled style="width: 400px; height: 200px"></textarea><br>
-    <button onclick="convert()">Convert</button>
+<a href="https://github.com/sagioto/maven2gradle"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+<div class="container">
+    <div class="jumbotron">
+        <h1><strong>maven 2 gradle</strong></h1>
+        <h3>Paste your maven dependencies here <small>(with or without the dependencies root element):</small></h3>
+        <div class="col-md-6">
+            <textarea id="input" class="form-control" rows="20" autofocus style="resize: none;"></textarea>
+        </div>
+        <div class="col-md-6">
+            <textarea id="output" disabled class="col-md-6 form-control" rows="20" style="resize: none;"></textarea>
+        </div>
+        <p style="color: transparent">.</p>
+        <button class="btn btn-primary center-block" style="margin-top: 20px" onclick="convert()">Convert ⇨</button>
+        <p style="color: transparent">.</p>
+        <div id="success" class="alert alert-success" role="alert" hidden><strong>It's in your clipboard!</strong></div>
+        <div id="empty" class="alert alert-warning" role="alert" hidden><strong>You should paste something in!</strong></div>
+        <div id="failed" class="alert alert-danger" role="alert" hidden><strong>Oh snap! something went wrong</strong></div>
+    </div>
+</div>
 </body>
 </html>

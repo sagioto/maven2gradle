@@ -1,9 +1,9 @@
 /**
  * Created by sbernstein on 4/8/15.
  */
-function convert(){
+function parseAndGenerate(){
     var text = document.getElementById('input').value;
-    var output = document.getElementById('output');
+
     var parser = new DOMParser();
     var parsedDeps = parser.parseFromString(text, 'text/xml');
     var shouldAddOuterClosure =  parsedDeps.getElementsByTagName('dependencies').length;
@@ -33,5 +33,28 @@ function convert(){
     if(shouldAddOuterClosure){
         grDepsOutput = 'dependencies {\n\t' + grDepsOutput.replace(/\n/g, '\n\t') + '\n}'
     }
-    output.value = grDepsOutput;
+    return grDepsOutput;
+}
+
+function convert(){
+    var ok = document.getElementById('success');
+    var empty = document.getElementById('empty');
+    var fail = document.getElementById('failed');
+    ok.hidden = true;
+    empty.hidden = true;
+    fail.hidden = true;
+    var output = document.getElementById('output');
+    try {
+        output.value = parseAndGenerate();
+        if(output.value){
+            ok.hidden = false;
+        } else {
+            empty.hidden = false;
+        }
+    }
+    catch (err){
+        output.value = '';
+        fail.hidden = false;
+    }
+
 }
