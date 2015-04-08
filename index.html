@@ -14,13 +14,13 @@
         <h1><strong>maven 2 gradle</strong></h1>
         <h3>Paste your maven dependencies here <small>(with or without the dependencies root element):</small></h3>
         <div class="col-md-6">
-            <textarea id="input" class="form-control" rows="20" autofocus style="resize: none;"></textarea>
+            <textarea id="input" class="form-control" rows="20" autofocus tabindex="1" style="resize: none;"></textarea>
         </div>
         <div class="col-md-6">
-            <textarea id="output" readOnly class="col-md-6 form-control" rows="20" style="resize: none;"></textarea>
+            <textarea id="output" readOnly tabindex="-1" class="col-md-6 form-control" rows="20" style="resize: none;"></textarea>
         </div>
         <p style="color: transparent">.</p>
-        <button class="btn btn-primary center-block" style="margin-top: 20px" onclick="convert()">Convert ⇨</button>
+        <button class="btn btn-primary center-block" tabindex="2" style="margin-top: 20px" onclick="convert()">Convert ⇨</button>
         <p style="color: transparent">.</p>
         <div id="success" class="alert alert-success" role="alert" hidden><strong>Go get 'em!</strong></div>
         <div id="empty" class="alert alert-warning" role="alert" hidden><strong>You should paste something in!</strong></div>
