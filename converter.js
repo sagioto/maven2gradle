@@ -48,6 +48,7 @@ function convert(){
         output.value = parseAndGenerate();
         if(output.value){
             ok.hidden = false;
+            output.select();
         } else {
             empty.hidden = false;
         }
