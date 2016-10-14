@@ -20,6 +20,9 @@ function parseAndGenerate(){
         if (scopeElems.length && scopeElems[0].innerHTML == 'test') {
             scope = 'testCompile';
         }
+        if (scopeElems.length && scopeElems[0].innerHTML == 'provided') {
+            scope = 'providedCompile';
+        }
         var group = depElem.getElementsByTagName('groupId')[0].innerHTML;
         var artifact = depElem.getElementsByTagName('artifactId')[0].innerHTML;
         var versionElems = depElem.getElementsByTagName('version');
