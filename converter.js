@@ -5,13 +5,55 @@ function parseAndGenerate(){
     var text = document.getElementById('input').value;
 
     var parser = new DOMParser();
-    var parsedDeps = parser.parseFromString(text, 'text/xml');
-    var shouldAddOuterClosure =  parsedDeps.getElementsByTagName('dependencies').length;
+    var pomXml = parser.parseFromString(text, 'text/xml');
+
+    var propertyList = [];
+    var dependencies = getDependencies(pomXml, propertyList);
+    var properties = getProperties(pomXml, propertyList);
+
+    return properties + dependencies;
+}
+
+function getProperties(pomXml, propertyList){
+    var shouldAddOuterClosure =  pomXml.getElementsByTagName('properties').length;
     if(!shouldAddOuterClosure){
         text = '<root>' + text + '</root>';
-        parsedDeps = parser.parseFromString(text, 'text/xml');
+        pomXml = parser.parseFromString(text, 'text/xml');
     }
-    var depElems = parsedDeps.getElementsByTagName('dependency');
+
+    var propertyElements = pomXml.getElementsByTagName("properties");
+    var output = "";
+    if(propertyElements != null) {
+        var propertyNodeList = propertyElements[0]. childNodes;
+
+        for(var i = 0; i < propertyNodeList.length; i++) {
+            var propertyNode = propertyNodeList[i];
+            if(propertyNode.namespaceURI == "http://maven.apache.org/POM/4.0.0") {
+                var propertyName = camelCase(propertyNode.tagName);
+                var propertyValue = propertyNode.textContent;
+                if(propertyList.indexOf(propertyName) != -1) {
+                    output += "def " + propertyName + " = \"" + propertyValue + "\"\n"
+                }
+            }
+        }
+    }
+
+    return output;
+}
+
+function camelCase(input) {
+    return input.toLowerCase().replace(/[.-](.)/g, function(match, group1) {
+        return group1.toUpperCase();
+    });
+}
+
+function getDependencies(pomXml, propertyList){
+    var shouldAddOuterClosure =  pomXml.getElementsByTagName('dependencies').length;
+    if(!shouldAddOuterClosure){
+        text = '<root>' + text + '</root>';
+        pomXml = parser.parseFromString(text, 'text/xml');
+    }
+    var depElems = pomXml.getElementsByTagName('dependency');
     var grDeps = [];
     for(var i = 0; i < depElems.length; i++) {
         var depElem = depElems[i];
@@ -26,6 +68,12 @@ function parseAndGenerate(){
         var version = '*';
         if (versionElems.length) {
             version = versionElems[0].innerHTML;
+        }
+        if(version.startsWith("$")) {
+            version = camelCase(version);
+            if(propertyList.indexOf(version) == -1) {
+                propertyList.push(version.substring(2, version.length - 1))
+            }
         }
         grDeps.push(scope + ' ' + '"' + group + ":" + artifact + ":" + version + '"');
     }
