@@ -16,9 +16,9 @@ function parseAndGenerate(){
     for(var i = 0; i < depElems.length; i++) {
         var depElem = depElems[i];
         var scopeElems = depElem.getElementsByTagName('scope');
-        var scope = 'compile';
+        var scope = 'implementation';
         if (scopeElems.length && scopeElems[0].innerHTML == 'test') {
-            scope = 'testCompile';
+            scope = 'testImplementation';
         }
         var group = depElem.getElementsByTagName('groupId')[0].innerHTML;
         var artifact = depElem.getElementsByTagName('artifactId')[0].innerHTML;
