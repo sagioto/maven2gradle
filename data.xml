@@ -1,0 +1,5 @@
+<dependency>
+    <groupId>com.helger.phase4</groupId>
+    <artifactId>phase4-lib</artifactId>
+    <version>3.0.0</version>
+</dependency>

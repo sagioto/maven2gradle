@@ -8,13 +8,13 @@ function parseAndGenerate(){
     var pomXml = parser.parseFromString(text, 'text/xml');
 
     var propertyList = [];
-    var dependencies = getDependencies(pomXml, propertyList);
-    var properties = getProperties(pomXml, propertyList);
+    var dependencies = getDependencies(text, parser, pomXml, propertyList);
+    var properties = getProperties(text, parser, pomXml, propertyList);
 
     return properties + dependencies;
 }
 
-function getProperties(pomXml, propertyList){
+function getProperties(text, parser, pomXml, propertyList){
     var shouldAddOuterClosure =  pomXml.getElementsByTagName('properties').length;
     if(!shouldAddOuterClosure){
         text = '<root>' + text + '</root>';
@@ -23,8 +23,8 @@ function getProperties(pomXml, propertyList){
 
     var propertyElements = pomXml.getElementsByTagName("properties");
     var output = "";
-    if(propertyElements != null) {
-        var propertyNodeList = propertyElements[0]. childNodes;
+    if(propertyElements != null && propertyElements.length > 0) {
+        var propertyNodeList = propertyElements[0].childNodes;
 
         for(var i = 0; i < propertyNodeList.length; i++) {
             var propertyNode = propertyNodeList[i];
@@ -47,7 +47,7 @@ function camelCase(input) {
     });
 }
 
-function getDependencies(pomXml, propertyList){
+function getDependencies(text, parser, pomXml, propertyList){
     var shouldAddOuterClosure =  pomXml.getElementsByTagName('dependencies').length;
     if(!shouldAddOuterClosure){
         text = '<root>' + text + '</root>';
@@ -104,6 +104,7 @@ function convert(){
     catch (err){
         output.value = '';
         fail.hidden = false;
+        console.log(err)
     }
 
 }
